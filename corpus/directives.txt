@@ -6,11 +6,10 @@ Commodity
 
 --------------------------------------------------------------------------------
 
-(ERROR
-  (number)
-  (number)
-  (number)
-  (UNEXPECTED 'E'))
+(beancount_file
+  (commodity
+    (date)
+    (currency)))
 
 ================================================================================
 Close
@@ -22,19 +21,17 @@ Close
 
 --------------------------------------------------------------------------------
 
-(ERROR
-  (number)
-  (number)
-  (number)
-  (UNEXPECTED 'A')
-  (UNEXPECTED 's')
-  (number)
-  (number)
-  (number)
-  (UNEXPECTED 'A')
-  (UNEXPECTED 196)
-  (UNEXPECTED 'm')
-  (string))
+(beancount_file
+  (close
+    (date)
+    (account))
+  (close
+    (date)
+    (account)
+    (metadata
+      (key_value
+        (key)
+        (string)))))
 
 ================================================================================
 Custom
@@ -46,21 +43,17 @@ Custom
 
 --------------------------------------------------------------------------------
 
-(ERROR
-  (number)
-  (number)
-  (number)
-  (string)
-  (string)
-  (UNEXPECTED 'A')
-  (UNEXPECTED 'N')
-  (number)
-  (number)
-  (number)
-  (string)
-  (string)
-  (UNEXPECTED 'A')
-  (UNEXPECTED 'N'))
+(beancount_file
+  (custom
+    (date)
+    (string)
+    (string)
+    (account))
+  (custom
+    (date)
+    (string)
+    (string)
+    (account)))
 
 ================================================================================
 Document
@@ -71,20 +64,17 @@ Document
 
 --------------------------------------------------------------------------------
 
-(ERROR
-  (number)
-  (number)
-  (number)
-  (UNEXPECTED 'A')
-  (UNEXPECTED 's')
-  (string)
-  (number)
-  (number)
-  (number)
-  (UNEXPECTED 'A')
-  (UNEXPECTED 196)
-  (string)
-  (UNEXPECTED 't'))
+(beancount_file
+  (document
+    (date)
+    (account)
+    (string))
+  (document
+    (date)
+    (account)
+    (string)
+    (tags_and_links
+      (tag))))
 
 ================================================================================
 Event
@@ -96,18 +86,20 @@ Event
 
 --------------------------------------------------------------------------------
 
-(ERROR
-  (number)
-  (number)
-  (number)
-  (string)
-  (string)
-  (UNEXPECTED 'k')
-  (UNEXPECTED 'E')
-  (UNEXPECTED 'k')
-  (number)
-  (number)
-  (UNEXPECTED 'D'))
+(beancount_file
+  (event
+    (date)
+    (string)
+    (string)
+    (metadata
+      (key_value
+        (key)
+        (bool))
+      (key_value
+        (key)
+        (amount
+          (number)
+          (currency))))))
 
 ================================================================================
 Open
@@ -119,26 +111,21 @@ Open
 
 --------------------------------------------------------------------------------
 
-(ERROR
-  (number)
-  (number)
-  (number)
-  (UNEXPECTED 'A')
-  (UNEXPECTED 's')
-  (number)
-  (number)
-  (number)
-  (UNEXPECTED 'A')
-  (UNEXPECTED 's')
-  (UNEXPECTED 'D')
-  (UNEXPECTED 'E')
-  (string)
-  (number)
-  (number)
-  (number)
-  (UNEXPECTED 'A')
-  (UNEXPECTED 's')
-  (string))
+(beancount_file
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account)
+    (currency_list
+      (currency)
+      (currency))
+    (string))
+  (open
+    (date)
+    (account)
+    (string)))
 
 ================================================================================
 Pad
@@ -148,13 +135,11 @@ Pad
 
 --------------------------------------------------------------------------------
 
-(ERROR
-  (number)
-  (number)
-  (number)
-  (UNEXPECTED 'A')
-  (UNEXPECTED 196)
-  (UNEXPECTED 196))
+(beancount_file
+  (pad
+    (date)
+    (account)
+    (account)))
 
 ================================================================================
 Query
@@ -164,12 +149,11 @@ Query
 
 --------------------------------------------------------------------------------
 
-(ERROR
-  (number)
-  (number)
-  (number)
-  (string)
-  (string))
+(beancount_file
+  (query
+    (date)
+    (string)
+    (string)))
 
 ================================================================================
 Note
@@ -179,10 +163,8 @@ Note
 
 --------------------------------------------------------------------------------
 
-(ERROR
-  (number)
-  (number)
-  (number)
-  (UNEXPECTED 'A')
-  (UNEXPECTED 196)
-  (string))
+(beancount_file
+  (note
+    (date)
+    (account)
+    (string)))

@@ -6,14 +6,13 @@ Simple Balance
 
 --------------------------------------------------------------------------------
 
-(ERROR
-  (number)
-  (number)
-  (number)
-  (UNEXPECTED 'A')
-  (UNEXPECTED 's')
-  (number)
-  (UNEXPECTED 'E'))
+(beancount_file
+  (balance
+    (date)
+    (account)
+    (amount
+      (number)
+      (currency))))
 
 ================================================================================
 Balance with computation
@@ -23,16 +22,18 @@ Balance with computation
 
 --------------------------------------------------------------------------------
 
-(ERROR
-  (number)
-  (number)
-  (number)
-  (UNEXPECTED 'A')
-  (UNEXPECTED 's')
-  (number)
-  (number)
-  (number)
-  (UNEXPECTED 'E'))
+(beancount_file
+  (balance
+    (date)
+    (account)
+    (amount
+      (binary_num_expr
+        (paren_num_expr
+          (binary_num_expr
+            (number)
+            (number)))
+        (number))
+      (currency))))
 
 ================================================================================
 Balance with tolerance
@@ -42,15 +43,14 @@ Balance with tolerance
 
 --------------------------------------------------------------------------------
 
-(ERROR
-  (number)
-  (number)
-  (number)
-  (UNEXPECTED 'A')
-  (UNEXPECTED 's')
-  (number)
-  (number)
-  (UNEXPECTED 'E'))
+(beancount_file
+  (balance
+    (date)
+    (account)
+    (amount_with_tolerance
+      (number)
+      (number)
+      (currency))))
 
 ================================================================================
 Balances with Unicode accounts
@@ -61,18 +61,16 @@ Balances with Unicode accounts
 
 --------------------------------------------------------------------------------
 
-(ERROR
-  (number)
-  (number)
-  (number)
-  (UNEXPECTED 'A')
-  (UNEXPECTED 228)
-  (number)
-  (UNEXPECTED 'E')
-  (number)
-  (number)
-  (number)
-  (UNEXPECTED 196)
-  (UNEXPECTED 214)
-  (number)
-  (UNEXPECTED 'E'))
+(beancount_file
+  (balance
+    (date)
+    (account)
+    (amount
+      (number)
+      (currency)))
+  (balance
+    (date)
+    (account)
+    (amount
+      (number)
+      (currency))))
