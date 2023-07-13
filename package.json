@@ -4,7 +4,7 @@
   "description": "a tree-sitter parser for the beancount syntax",
   "main": "bindings/node",
   "scripts": {
-    "build": "tree-sitter generate",
+    "build": "tree-sitter generate && tree-sitter build-wasm",
     "test": "tree-sitter test"
   },
   "repository": {
