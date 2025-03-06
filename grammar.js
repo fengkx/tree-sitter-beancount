@@ -94,7 +94,7 @@ module.exports = grammar({
                 ),
             ),
         currency: $ => token(/[A-Z][A-Z0-9\'\._\-]{0,22}[A-Z0-9]/),
-        string: $ => token(/"[^"]*"/),
+        string: $ => token(/"([^"]|\\")*"/),
         number: $ => token(/([0-9]+|[0-9][0-9,]+[0-9])(\.[0-9]*)?/),
         tag: $ => token(/#[A-Za-z0-9\-_/.]+/),
         link: $ => token(/\^[A-Za-z0-9\-_/.]+/),
@@ -169,10 +169,10 @@ module.exports = grammar({
         _txn_strings: $ =>
             choice(
                 seq(
-                    alias($.string, $.payee),
-                    alias($.string, $.narration),
+                    field("payee", alias($.string, $.payee)),
+                    field("narration", alias($.string, $.narration)),
                 ),
-                alias($.string, $.narration),
+                field("narration", alias($.string, $.narration)),
             ),
 
         // OPTIONAL
@@ -211,7 +211,7 @@ module.exports = grammar({
                             $.posting,
                             seq(
                                 $._indent,
-                                $.comment,
+                                field("comment", $.comment),
                                 $._eol
                             )
                         )
@@ -326,7 +326,12 @@ module.exports = grammar({
                     ),
                     seq(
                         $._key_value_line
-                    )
+                    ),
+                    seq(
+                        $._indent,
+                        field("comment", $.comment),
+                        $._eol
+                    ),
                 )
             ),
 
@@ -522,6 +527,7 @@ module.exports = grammar({
                 "price",
                 field("currency", $.currency),
                 field("amount", $.amount),
+                field("comment", optional($.comment)),
                 $._eol,
                 optional($._key_value_list)
             ),
@@ -532,6 +538,7 @@ module.exports = grammar({
                 "event",
                 field("type", $.string),
                 field("desc", $.string),
+                field("comment", optional($.comment)),
                 $._eol,
                 optional($._key_value_list)
             ),
@@ -542,6 +549,7 @@ module.exports = grammar({
                 "query",
                 field("name", $.string),
                 field("query", $.string),
+                field("comment", optional($.comment)),
                 $._eol,
                 optional($._key_value_list)
             ),
@@ -552,6 +560,7 @@ module.exports = grammar({
                 "note",
                 field("account", $.account),
                 field("note", $.string),
+                field("comment", optional($.comment)),
                 $._eol,
                 optional($._key_value_list)
             ),
@@ -565,6 +574,7 @@ module.exports = grammar({
                 field("account", $.account),
                 field("filename", $.filename),
                 field("tags_links", optional($.tags_links)),
+                field("comment", optional($.comment)),
                 $._eol,
                 optional($._key_value_list)
             ),
@@ -590,6 +600,7 @@ module.exports = grammar({
                         $.custom_value
                     ),
                 )),
+                field("comment", optional($.comment)),
                 $._eol,
                 optional($._key_value_list)
             ),

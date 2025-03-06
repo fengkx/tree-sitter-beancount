@@ -4,3 +4,7 @@ build
 .direnv
 .pre-commit-config.yaml
 .turbo
+result
+/.direnv
+/.pre-commit-config.yaml
+target
