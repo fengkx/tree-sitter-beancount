@@ -1,30 +1,31 @@
 {
-  "name": "tree-sitter-beancount",
-  "version": "2.1.3",
-  "description": "a tree-sitter parser for the beancount syntax",
-  "main": "bindings/node",
-  "scripts": {
-    "build": "tree-sitter generate && tree-sitter build-wasm",
-    "test": "tree-sitter test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://bryall@github.com/bryall/tree-sitter-beancount.git"
-  },
-  "keywords": [
-    "tree-sitter",
-    "beancount"
-  ],
-  "author": "Brian Ryall",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/bryall/tree-sitter-beancount/issues"
-  },
-  "homepage": "https://github.com/bryall/tree-sitter-beancount#readme",
-  "dependencies": {
-    "nan": "^2.22.1"
-  },
-  "devDependencies": {
-    "tree-sitter-cli": "^0.20.0"
-  }
+	"name": "@fengkx/tree-sitter-beancount",
+	"version": "2.1.3",
+	"description": "a tree-sitter parser for the beancount syntax",
+	"main": "bindings/node",
+	"scripts": {
+		"build": "tree-sitter generate && tree-sitter build-wasm",
+		"check": "npm run test",
+		"test": "tree-sitter test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://bryall@github.com/bryall/tree-sitter-beancount.git"
+	},
+	"keywords": [
+		"tree-sitter",
+		"beancount"
+	],
+	"author": "Brian Ryall",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/bryall/tree-sitter-beancount/issues"
+	},
+	"homepage": "https://github.com/bryall/tree-sitter-beancount#readme",
+	"dependencies": {
+		"nan": "^2.22.1"
+	},
+	"devDependencies": {
+		"tree-sitter-cli": "^0.20.0"
+	}
 }

@@ -1,0 +1,310 @@
+=======
+Accounts
+=======
+
+2023-01-01 open Assets:Checking
+2023-01-01 open Liabilities:CreditCard
+2023-01-01 open Equity:Opening-Balances
+2023-01-01 open Income:Salary
+2023-01-01 open Expenses:Food
+
+2023-01-02 * "Initial deposit"
+    Assets:Checking                 1000.00 USD
+    Equity:Opening-Balances        -1000.00 USD
+
+2023-01-03 * "Grocery shopping"
+    Expenses:Food                     75.50 USD
+    Liabilities:CreditCard           -75.50 USD
+
+2023-01-04 * "Salary payment"
+    Assets:Checking                 2500.00 USD
+    Income:Salary                  -2500.00 USD
+
+---
+
+(file
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (transaction
+    (date)
+    (txn)
+    (narration)
+      (posting
+        (account)
+        (incomplete_amount (number) (currency)))
+      (posting
+        (account)
+        (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+  (transaction
+    (date)
+    (txn)
+    (narration)
+      (posting
+        (account)
+        (incomplete_amount (number) (currency)))
+      (posting
+        (account)
+        (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+  (transaction
+    (date)
+    (txn)
+    (narration)
+      (posting
+        (account)
+        (incomplete_amount (number) (currency)))
+      (posting
+        (account)
+        (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+)
+
+===================
+Accounts with CJK characters
+===================
+
+2023-01-01 open Assets:Checking:中文
+2023-01-01 open Assets:Bank:日本語
+2023-01-01 open Liabilities:CreditCard:한국어
+2023-01-01 open Expenses:Food:中文餐厅
+2023-01-01 open Income:Salary:外国企業
+
+2023-01-02 * "Chinese restaurant"
+    Expenses:Food:中文餐厅             200.00 USD
+    Liabilities:CreditCard:한국어     -200.00 USD
+
+2023-01-03 * "Salary from foreign company"
+    Assets:Checking:中文             5000.00 USD
+    Income:Salary:外国企業          -5000.00 USD
+
+---
+
+(file
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (transaction
+    (date)
+    (txn)
+    (narration)
+      (posting
+        (account)
+        (incomplete_amount (number) (currency)))
+      (posting
+        (account)
+        (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+  (transaction
+    (date)
+    (txn)
+    (narration)
+      (posting
+        (account)
+        (incomplete_amount (number) (currency)))
+      (posting
+        (account)
+        (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+)
+
+===================
+Accounts with Hiragana/Katakana
+===================
+
+2023-01-01 open Assets:Checking:かな
+2023-01-01 open Assets:Bank:カタカナ
+2023-01-01 open Expenses:Food:レストラン
+2023-01-01 open Income:Salary:給料
+
+2023-01-02 * "Japanese restaurant"
+    Expenses:Food:レストラン           150.00 JPY
+    Assets:Checking:かな              -150.00 JPY
+
+2023-01-03 * "Salary payment"
+    Assets:Bank:カタカナ             30000.00 JPY
+    Income:Salary:給料              -30000.00 JPY
+
+---
+
+(file
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (transaction
+    (date)
+    (txn)
+    (narration)
+      (posting
+        (account)
+        (incomplete_amount (number) (currency)))
+      (posting
+        (account)
+        (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+  (transaction
+    (date)
+    (txn)
+    (narration)
+      (posting
+        (account)
+        (incomplete_amount (number) (currency)))
+      (posting
+        (account)
+        (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+)
+
+===================
+Mixed character accounts
+===================
+
+2023-01-01 open Assets:Checking:中文-Account
+2023-01-01 open Assets:Bank:日本語2
+2023-01-01 open Liabilities:CreditCard:한국어-Card
+2023-01-01 open Expenses:Food:中文餐厅123
+2023-01-01 open Income:Salary:外国企業-2023
+
+2023-01-02 * "Mixed character transaction"
+    Expenses:Food:中文餐厅123          123.45 USD
+    Liabilities:CreditCard:한국어-Card -123.45 USD
+
+2023-01-03 * "Salary from foreign company 2023"
+    Assets:Checking:中文-Account      3000.00 USD
+    Income:Salary:外国企業-2023      -3000.00 USD
+
+---
+
+(file
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (transaction
+    (date)
+    (txn)
+    (narration)
+      (posting
+        (account)
+        (incomplete_amount (number) (currency)))
+      (posting
+        (account)
+        (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+  (transaction
+    (date)
+    (txn)
+    (narration)
+      (posting
+        (account)
+        (incomplete_amount (number) (currency)))
+      (posting
+        (account)
+        (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+)
+
+===================
+Complex account structures
+===================
+
+2023-01-01 open Assets:Investments:Brokerage:Stocks:Tech:AAPL
+2023-01-01 open Liabilities:Mortgage:House1:Principal
+2023-01-01 open Expenses:Transportation:Car:Maintenance:Parts
+2023-01-01 open Income:Freelance:Project:Client:中文客户
+
+
+2023-01-03 * "Car repair"
+    Expenses:Transportation:Car:Maintenance:Parts    250.00 USD
+    Liabilities:CreditCard                          -250.00 USD
+
+2023-01-04 * "Mortgage payment"
+    Liabilities:Mortgage:House1:Principal           500.00 USD
+    Assets:Checking                                -500.00 USD
+
+2023-01-05 * "Freelance income"
+    Assets:Checking                                1200.00 USD
+    Income:Freelance:Project:Client:中文客户      -1200.00 USD
+
+---
+
+(file
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (open
+    (date)
+    (account))
+  (transaction
+    (date)
+    (txn)
+    (narration)
+      (posting
+        (account)
+        (incomplete_amount (number) (currency)))
+      (posting
+        (account)
+        (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+  (transaction
+    (date)
+    (txn)
+    (narration)
+      (posting
+        (account)
+        (incomplete_amount (number) (currency)))
+      (posting
+        (account)
+        (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+  (transaction
+    (date)
+    (txn)
+    (narration)
+      (posting
+        (account)
+        (incomplete_amount (number) (currency)))
+      (posting
+        (account)
+        (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+)
