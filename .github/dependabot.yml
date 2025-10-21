@@ -1,11 +1,44 @@
 version: 2
 updates:
-  - package-ecosystem: github-actions
-    directory: "/"
+  # Rust dependencies
+  - package-ecosystem: cargo
+    directory: /
     schedule:
-      interval: daily
-    open-pull-requests-limit: 10
+      interval: weekly
+      day: sunday
     commit-message:
-      prefix: "chore:"
+      prefix: build(deps)
     labels:
-      - dependabot
+      - dependencies
+    groups:
+       cargo:
+        patterns: ["*"]
+
+  # NPM dependencies
+  - package-ecosystem: npm
+    versioning-strategy: increase
+    directory: /
+    schedule:
+      interval: weekly
+      day: sunday
+    commit-message:
+      prefix: build(deps)
+    labels:
+      - dependencies
+    groups:
+      npm:
+        patterns: ["*"]
+
+  # GitHub Actions
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: sunday
+    commit-message:
+      prefix: ci
+    labels:
+      - dependencies
+    groups:
+      actions:
+        patterns: ["*"]

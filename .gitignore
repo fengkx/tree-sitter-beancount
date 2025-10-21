@@ -4,3 +4,10 @@ build
 .direnv
 .pre-commit-config.yaml
 .turbo
+/node_modules
+/build
+/result
+/.direnv
+/.pre-commit-config.yaml
+target
+Cargo.lock

@@ -171,7 +171,7 @@
         ]
       },
       "comment": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -256,7 +256,7 @@
         ]
       },
       "comment": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -288,16 +288,11 @@
     }
   },
   {
-    "type": "comment",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "commodity",
     "named": true,
     "fields": {
       "comment": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -453,6 +448,16 @@
     "type": "custom",
     "named": true,
     "fields": {
+      "comment": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "comment",
+            "named": true
+          }
+        ]
+      },
       "custom_value_list": {
         "multiple": true,
         "required": false,
@@ -552,6 +557,16 @@
           }
         ]
       },
+      "comment": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "comment",
+            "named": true
+          }
+        ]
+      },
       "date": {
         "multiple": false,
         "required": true,
@@ -598,6 +613,16 @@
     "type": "event",
     "named": true,
     "fields": {
+      "comment": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "comment",
+            "named": true
+          }
+        ]
+      },
       "date": {
         "multiple": false,
         "required": true,
@@ -643,6 +668,7 @@
   {
     "type": "file",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -745,11 +771,6 @@
     }
   },
   {
-    "type": "item",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "key_value",
     "named": true,
     "fields": {},
@@ -778,6 +799,16 @@
         "types": [
           {
             "type": "account",
+            "named": true
+          }
+        ]
+      },
+      "comment": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "comment",
             "named": true
           }
         ]
@@ -829,7 +860,7 @@
         ]
       },
       "comment": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -955,7 +986,7 @@
         ]
       },
       "comment": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -1135,6 +1166,16 @@
           }
         ]
       },
+      "comment": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "comment",
+            "named": true
+          }
+        ]
+      },
       "currency": {
         "multiple": false,
         "required": true,
@@ -1216,6 +1257,16 @@
     "type": "query",
     "named": true,
     "fields": {
+      "comment": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "comment",
+            "named": true
+          }
+        ]
+      },
       "date": {
         "multiple": false,
         "required": true,
@@ -1330,7 +1381,7 @@
     "named": true,
     "fields": {
       "comment": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -1345,6 +1396,26 @@
         "types": [
           {
             "type": "date",
+            "named": true
+          }
+        ]
+      },
+      "narration": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "narration",
+            "named": true
+          }
+        ]
+      },
+      "payee": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "payee",
             "named": true
           }
         ]
@@ -1375,19 +1446,7 @@
       "required": false,
       "types": [
         {
-          "type": "comment",
-          "named": true
-        },
-        {
           "type": "key_value",
-          "named": true
-        },
-        {
-          "type": "narration",
-          "named": true
-        },
-        {
-          "type": "payee",
           "named": true
         },
         {
@@ -1531,7 +1590,7 @@
     "named": false
   },
   {
-    "type": ";",
+    "type": "NULL",
     "named": false
   },
   {
@@ -1557,6 +1616,10 @@
   {
     "type": "close",
     "named": false
+  },
+  {
+    "type": "comment",
+    "named": true
   },
   {
     "type": "commodity",
@@ -1589,6 +1652,10 @@
   {
     "type": "include",
     "named": false
+  },
+  {
+    "type": "item",
+    "named": true
   },
   {
     "type": "key",
