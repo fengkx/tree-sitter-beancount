@@ -29,6 +29,12 @@ Unclosed string recovery
         (date)
         (txn)
         (string)
+        (account)
+        (number)
+        (flag)
+        (flag)
+        (UNEXPECTED 'D')
+        (account)
     )
     (transaction
         (date)
@@ -75,5 +81,53 @@ Multiline with indented digit
         (txn)
         (narration)
         (posting (account) (incomplete_amount (number) (currency)))
+    )
+)
+
+============================
+Unclosed string with long posting lines
+============================
+
+2025-07-07 * "Merchant" "Desc
+    Expenses:Food                                           30.2 CNY
+    Liabilities:CreditCard:ABC 
+
+2025-07-07 * "Broker" "Buy ETF"
+    Assets:Stock:Broker:Shares                             5000 SH_512800 {0.887 CNY}
+    Assets:Stock:Broker:Cash                           -4435.00 CNY
+    Expenses:Trades:Fee                                    5.00 CNY
+    Assets:Stock:Broker:Cash                              -5.00 CNY
+
+---
+
+(file
+    (ERROR
+        (date)
+        (txn)
+        (string)
+        (account)
+        (number)
+        (flag)
+        (UNEXPECTED 'Y')
+        (account)
+    )
+    (transaction
+        (date)
+        (txn)
+        (payee)
+        (narration)
+        (posting
+            (account)
+            (incomplete_amount (number) (currency))
+            (cost_spec (cost_comp (compound_amount (number) (currency)))))
+        (posting
+            (account)
+            (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+        (posting
+            (account)
+            (incomplete_amount (number) (currency)))
+        (posting
+            (account)
+            (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
     )
 )

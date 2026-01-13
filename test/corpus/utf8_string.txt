@@ -57,6 +57,11 @@ UTF-8 unclosed string recovery
     (ERROR
         (date)
         (txn)
+        (account)
+        (number)
+        (flag)
+        (UNEXPECTED 'Y')
+        (account)
     )
     (transaction
         (date)

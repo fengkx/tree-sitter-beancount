@@ -76,8 +76,11 @@ struct Scanner {
         lexer->advance(lexer, true);
     }
 
-    // Check if the current position starts with a date format (YYYY- or YYYY/)
+    // Check if the current position starts with a date format (YYYY-MM-DD)
     // Only matches years starting with 1xxx or 2xxx (reasonable year range)
+    // This function checks the ENTIRE line pattern to distinguish between:
+    // - A new directive line (e.g., "2025-07-07 * ..." or "2025-07-07 balance ...")
+    // - A multiline string content that happens to start with digits (e.g., "100 items")
     // Note: This function consumes characters for lookahead
     static bool is_date_start(TSLexer *lexer) {
         int32_t c = lexer->lookahead;
@@ -88,7 +91,7 @@ struct Scanner {
         }
         lexer->advance(lexer, false);
         
-        // Next 3 characters must be digits
+        // Next 3 characters must be digits (YYYY)
         for (int i = 0; i < 3; i++) {
             c = lexer->lookahead;
             if (c < '0' || c > '9') {
@@ -99,7 +102,48 @@ struct Scanner {
         
         // 5th character must be '-' or '/'
         c = lexer->lookahead;
-        return (c == '-' || c == '/');
+        if (c != '-' && c != '/') {
+            return false;
+        }
+        lexer->advance(lexer, false);
+        
+        // Check for MM (01-12)
+        c = lexer->lookahead;
+        if (c < '0' || c > '1') {
+            return false;
+        }
+        lexer->advance(lexer, false);
+        
+        c = lexer->lookahead;
+        if (c < '0' || c > '9') {
+            return false;
+        }
+        lexer->advance(lexer, false);
+        
+        // Check for separator
+        c = lexer->lookahead;
+        if (c != '-' && c != '/') {
+            return false;
+        }
+        lexer->advance(lexer, false);
+        
+        // Check for DD (01-31)
+        c = lexer->lookahead;
+        if (c < '0' || c > '3') {
+            return false;
+        }
+        lexer->advance(lexer, false);
+        
+        c = lexer->lookahead;
+        if (c < '0' || c > '9') {
+            return false;
+        }
+        lexer->advance(lexer, false);
+        
+        // After the date (YYYY-MM-DD), there MUST be whitespace
+        // This distinguishes a directive line from arbitrary text
+        c = lexer->lookahead;
+        return (c == ' ' || c == '\t');
     }
 
     // Check if current position is an org-mode headline (asterisk followed by whitespace or more asterisks)
@@ -112,31 +156,117 @@ struct Scanner {
         return (c == ' ' || c == '\t' || c == '*');
     }
 
+    // Check if the string matches a Beancount account prefix
+    // Account prefixes: Assets, Liabilities, Equity, Income, Expenses
+    // Returns true if current position starts with one of these followed by ':'
+    static bool is_account_prefix(TSLexer *lexer) {
+        int32_t c = lexer->lookahead;
+        
+        // Check for each account type prefix
+        // Assets:
+        if (c == 'A') {
+            const char *expected = "ssets:";
+            lexer->advance(lexer, false);
+            for (int i = 0; expected[i]; i++) {
+                if (lexer->lookahead != expected[i]) return false;
+                lexer->advance(lexer, false);
+            }
+            return true;
+        }
+        
+        // Liabilities:
+        if (c == 'L') {
+            const char *expected = "iabilities:";
+            lexer->advance(lexer, false);
+            for (int i = 0; expected[i]; i++) {
+                if (lexer->lookahead != expected[i]) return false;
+                lexer->advance(lexer, false);
+            }
+            return true;
+        }
+        
+        // Equity:
+        if (c == 'E') {
+            lexer->advance(lexer, false);
+            c = lexer->lookahead;
+            if (c == 'q') {
+                // Equity:
+                const char *expected = "uity:";
+                lexer->advance(lexer, false);
+                for (int i = 0; expected[i]; i++) {
+                    if (lexer->lookahead != expected[i]) return false;
+                    lexer->advance(lexer, false);
+                }
+                return true;
+            } else if (c == 'x') {
+                // Expenses:
+                const char *expected = "penses:";
+                lexer->advance(lexer, false);
+                for (int i = 0; expected[i]; i++) {
+                    if (lexer->lookahead != expected[i]) return false;
+                    lexer->advance(lexer, false);
+                }
+                return true;
+            }
+            return false;
+        }
+        
+        // Income:
+        if (c == 'I') {
+            const char *expected = "ncome:";
+            lexer->advance(lexer, false);
+            for (int i = 0; expected[i]; i++) {
+                if (lexer->lookahead != expected[i]) return false;
+                lexer->advance(lexer, false);
+            }
+            return true;
+        }
+        
+        return false;
+    }
+
     // Determine if string scanning should abort at the start of a non-indented line
+    // This function may look ahead through empty lines to find the actual content
     static bool should_abort_at_line_start(TSLexer *lexer) {
         int32_t c = lexer->lookahead;
+        
+        // Skip through empty lines to find actual content
+        // Empty lines in Beancount separate directives, so we need to look past them
+        while (c == '\n' || c == '\r') {
+            lexer->advance(lexer, false);
+            if (c == '\r' && lexer->lookahead == '\n') {
+                lexer->advance(lexer, false);
+            }
+            c = lexer->lookahead;
+        }
         
         // EOF
         if (c == 0) {
             return true;
         }
         
-        // Semicolon -> comment
+        // If after empty lines we find indentation, this is still part of the string
+        // (indented lines belong to the current directive)
+        if (c == ' ' || c == '\t') {
+            return false;
+        }
+        
+        // Semicolon -> comment (new directive)
         if (c == ';') {
             return true;
         }
         
-        // Asterisk -> possibly org-mode headline
+        // Asterisk -> possibly org-mode headline (new directive)
         if (c == '*') {
             return is_org_headline(lexer);
         }
         
-        // Starting with '1' or '2' -> check for full date format
+        // Starting with '1' or '2' -> check for full date format (new directive)
         if (c == '1' || c == '2') {
             return is_date_start(lexer);
         }
         
-        // Otherwise continue matching
+        // Otherwise continue matching (unknown content, include in string)
         return false;
     }
 
@@ -169,6 +299,10 @@ struct Scanner {
             
             // Newline - critical decision point
             if (c == '\n' || c == '\r') {
+                // Before consuming newline, mark_end at current position
+                // This gives us a safe boundary if we need to abort
+                lexer->mark_end(lexer);
+                
                 // Consume newline
                 lexer->advance(lexer, false);
                 // Handle \r\n combination
@@ -183,9 +317,26 @@ struct Scanner {
                     lexer->advance(lexer, false);
                 }
                 
-                // If indented, continue matching (part of current directive)
+                // If indented, check if it looks like a posting (starts with account prefix)
+                // In Beancount, an unclosed string followed by posting-like lines should terminate
+                // This handles cases like:
+                //   2025-07-07 * "Payee" "Unclosed narration
+                //       Expenses:Food 30 CNY      <- looks like a posting, terminate string
+                //       Liabilities:Credit
                 if (has_indent) {
-                    // Include newline and indentation, mark_end at current position
+                    // Check if this indented line starts with an account prefix
+                    // If so, terminate the string content here (before the newline)
+                    if (is_account_prefix(lexer)) {
+                        // This looks like a posting line, not string content
+                        // Use the mark_end we set before consuming newline
+                        if (has_content) {
+                            lexer->result_symbol = STRING_CONTENT;
+                            return true;
+                        }
+                        return false;
+                    }
+                    
+                    // Not an account prefix - include newline and indentation
                     lexer->mark_end(lexer);
                     has_content = true;
                     continue;
@@ -193,16 +344,19 @@ struct Scanner {
                 
                 // Non-indented (at column 0) - check if should abort
                 if (should_abort_at_line_start(lexer)) {
-                    // Abort! Don't mark_end, keep the previous valid mark_end
-                    // Will rollback to the last mark_end position when returning
-                    lexer->result_symbol = STRING_CONTENT;
-                    return has_content;
+                    // Abort! We've already mark_end before consuming the newline
+                    // Return the content we have so far
+                    if (has_content) {
+                        lexer->result_symbol = STRING_CONTENT;
+                        return true;
+                    }
+                    // No content - return false to let tree-sitter handle
+                    return false;
                 }
                 
-                // Don't abort (blank line or non-date content at column 0)
-                // Don't mark_end! Keep the previous valid content's mark_end position
-                // If we encounter a date later, will correctly rollback
-                // If we consume regular characters later, will mark_end then
+                // Don't abort - this line is part of the string content
+                // Mark_end to include what we've consumed so far
+                lexer->mark_end(lexer);
                 has_content = true;
                 continue;
             }
@@ -227,10 +381,11 @@ struct Scanner {
 
     bool scan(TSLexer *lexer, const bool *valid_symbols) {
 
+        // In error recovery, all external symbols are valid - skip to avoid interference
         if (in_error_recovery(valid_symbols))
             return false;
 
-        // New: handle string content
+        // Handle string content when it's the valid symbol
         if (valid_symbols[STRING_CONTENT]) {
             return scan_string_content(lexer);
         }
