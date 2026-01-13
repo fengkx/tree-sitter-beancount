@@ -16,6 +16,7 @@ module.exports = grammar({
 		$._stars,
 		$._sectionend,
 		$._eof, // Basically just '\0', but allows multiple to be matched
+		$._string_content,  // 新增：字符串内容由外部扫描器处理
 	],
 
 	extras: ($) => [
@@ -103,7 +104,7 @@ module.exports = grammar({
 				),
 			),
 		currency: $ => token(/[A-Z]([A-Z0-9\'\._\-]{0,22}[A-Z0-9])?/),
-		string: $ => token(/"([^"]|\\")*"/),
+		string: $ => seq('"', optional($._string_content), '"'),
 		number: $ => token(/([0-9]+|[0-9][0-9,]+[0-9])(\.[0-9]*)?/),
 		tag: $ => token(/#[A-Za-z0-9\-_/.]+/),
 		link: $ => token(/\^[A-Za-z0-9\-_/.]+/),

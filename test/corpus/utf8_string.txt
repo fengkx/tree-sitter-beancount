@@ -1,0 +1,89 @@
+============================
+UTF-8 string content
+============================
+
+2026-01-13 * "中文商户" "购买商品"
+  Assets:Bank 100 CNY
+  Expenses:Food
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (payee)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account))
+    )
+)
+
+============================
+UTF-8 multiline string
+============================
+
+2026-01-13 * "多行中文
+  第二行内容
+  第三行"
+  Assets:Bank 100 CNY
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+    )
+)
+
+============================
+UTF-8 unclosed string recovery
+============================
+
+2026-01-13 * "未闭合中文字符串
+  Assets:Bank 100 CNY
+  Expenses:Food
+
+2026-01-13 * "下一笔交易" "正常"
+  Assets:Bank 200 CNY
+  Expenses:Food
+
+---
+
+(file
+    (ERROR
+        (date)
+        (txn)
+    )
+    (transaction
+        (date)
+        (txn)
+        (payee)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account))
+    )
+)
+
+============================
+UTF-8 multiline non-indented
+============================
+
+2026-01-13 * "第一行
+继续第二行"
+  Assets:Bank 100 CNY
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+    )
+)
+

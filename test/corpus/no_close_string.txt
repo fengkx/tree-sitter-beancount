@@ -1,0 +1,79 @@
+============================
+Unclosed string recovery
+============================
+
+2026-01-13 * "AAA" "BB"
+  Assets:Bank:A 10 USD
+  Income:Invest
+
+2026-01-13 * "CCC" "DD
+  Assets:Bank:A 1.234 USD
+  Income:Invest
+
+2026-01-13 * "AAA" "BB"
+  Assets:Bank:A 10 USD
+  Income:Invest
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (payee)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account))
+    )
+    (ERROR
+        (date)
+        (txn)
+        (string)
+    )
+    (transaction
+        (date)
+        (txn)
+        (payee)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account))
+    )
+)
+
+============================
+Multiline with leading digit (not date)
+============================
+
+2026-01-13 * "Count:
+100 items in stock"
+  Assets:Bank 10 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+    )
+)
+
+============================
+Multiline with indented digit
+============================
+
+2026-01-13 * "Count:
+  100 items"
+  Assets:Bank 10 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+    )
+)

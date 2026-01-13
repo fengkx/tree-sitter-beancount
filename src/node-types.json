@@ -789,6 +789,11 @@
     }
   },
   {
+    "type": "narration",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "note",
     "named": true,
     "fields": {
@@ -1025,6 +1030,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "payee",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "plugin",
@@ -1357,6 +1367,11 @@
     }
   },
   {
+    "type": "string",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "tags_links",
     "named": true,
     "fields": {},
@@ -1565,6 +1580,10 @@
     "named": false
   },
   {
+    "type": "\"",
+    "named": false
+  },
+  {
     "type": "#",
     "named": false
   },
@@ -1665,10 +1684,6 @@
     "named": true
   },
   {
-    "type": "narration",
-    "named": true
-  },
-  {
     "type": "note",
     "named": false
   },
@@ -1687,10 +1702,6 @@
   {
     "type": "pad",
     "named": false
-  },
-  {
-    "type": "payee",
-    "named": true
   },
   {
     "type": "plugin",
@@ -1726,10 +1737,6 @@
   },
   {
     "type": "slash",
-    "named": true
-  },
-  {
-    "type": "string",
     "named": true
   },
   {

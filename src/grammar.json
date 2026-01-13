@@ -256,11 +256,29 @@
       }
     },
     "string": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PATTERN",
-        "value": "\"([^\"]|\\\\\")*\""
-      }
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "\""
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_string_content"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "\""
+        }
+      ]
     },
     "number": {
       "type": "TOKEN",
@@ -2414,6 +2432,10 @@
     {
       "type": "SYMBOL",
       "name": "_eof"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_string_content"
     }
   ],
   "inline": [],
