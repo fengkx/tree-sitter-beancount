@@ -1,0 +1,52 @@
+==========================
+enhanced plugin directives
+==========================
+
+plugin "beancount.plugins.auto"
+
+plugin "beancount.plugins.unrealized" "FIFO"
+
+plugin "beancount.plugins.fava"
+
+---
+
+(file
+    (plugin (string))
+    (plugin (string) (string))
+    (plugin (string))
+)
+
+==========================
+plugin with complex config
+==========================
+
+plugin "beancount.plugins.watch" "config.yaml"
+
+plugin "beancount.plugins.ingest" "input.csv"
+
+plugin "beancount.plugins.forecast" "model.json"
+
+---
+
+(file
+    (plugin (string) (string))
+    (plugin (string) (string))
+    (plugin (string) (string))
+)
+
+================================
+options with multiple plugins
+================================
+
+option "plugin" "beancount.plugins.auto"
+option "plugin" "beancount.plugins.unrealized"
+
+plugin "beancount.plugins.custom"
+
+---
+
+(file
+    (option (string) (string))
+    (option (string) (string))
+    (plugin (string))
+)

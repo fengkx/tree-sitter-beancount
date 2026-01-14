@@ -1,0 +1,26 @@
+========================
+Unicode Account Names
+========================
+
+2013-05-18 open Assets:银行:账户名称
+2013-05-18 open Expenses:支出:餐饮Food
+
+2013-05-19 * "Transactions with CJK account names"
+    Assets:银行:账户名称              1000 USD
+    Expenses:支出:餐饮Food            -750 USD
+    Equity:期初余额                  -250 USD
+
+---
+
+(file
+    (open (date) (account))
+    (open (date) (account))
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+)

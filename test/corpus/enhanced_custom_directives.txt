@@ -1,0 +1,161 @@
+================================
+enhanced custom directive tests
+================================
+
+2013-05-18 custom "budget" "weekly < 1000.00 USD" 2016-02-28 TRUE 43.03 USD 23
+
+2014-01-01 custom "forecast" "Q1 2014 budget" "expenses" 50000.00 USD
+
+2014-06-15 custom "invoice" "INV-2014-001" "client-name" TRUE 1250.00 USD
+
+---
+
+(file
+    (custom
+        (date)
+        (string)
+        (custom_value (string))
+        (custom_value (date))
+        (custom_value (bool))
+        (custom_value (amount (number) (currency)))
+        (custom_value (number))
+    )
+    (custom
+        (date)
+        (string)
+        (custom_value (string))
+        (custom_value (string))
+        (custom_value (amount (number) (currency)))
+    )
+    (custom
+        (date)
+        (string)
+        (custom_value (string))
+        (custom_value (string))
+        (custom_value (bool))
+        (custom_value (amount (number) (currency)))
+    )
+)
+
+================================
+custom with various data types
+================================
+
+2014-01-01 custom "test" 2014-12-31 TRUE FALSE
+
+2014-02-01 custom "complex" "simple types" 42 99.99 USD FALSE
+
+2014-03-01 custom "metadata" Assets:Bank:Checking TRUE 100 USD
+
+---
+
+(file
+    (custom
+        (date)
+        (string)
+        (custom_value (date))
+        (custom_value (bool))
+        (custom_value (bool))
+    )
+    (custom
+        (date)
+        (string)
+        (custom_value (string))
+        (custom_value (number))
+        (custom_value (amount (number) (currency)))
+        (custom_value (bool))
+    )
+    (custom
+        (date)
+        (string)
+        (custom_value (account))
+        (custom_value (bool))
+        (custom_value (amount (number) (currency)))
+    )
+)
+
+==============================
+include directives with plugins
+==============================
+
+include "common.beancount"
+
+plugin "beancount.plugins.unrealized"
+
+include "investments.beancount"
+
+option "plugin" "beancount.plugins.fava"
+
+include "transactions.beancount"
+
+---
+
+(file
+    (include (string))
+    (plugin (string))
+    (include (string))
+    (option (string) (string))
+    (include (string))
+)
+
+=====================================
+directive ordering and combinations
+=====================================
+
+option "name" "My Ledger"
+
+2014-01-01 commodity HOOL
+    name: "Hooli Corp"
+
+2014-01-01 open Assets:Investments
+
+2014-01-01 * "Test transaction"
+    Assets:Investments   10 HOOL {100 USD}
+    Assets:Cash         -1000 USD
+
+2014-01-01 pad Assets:Cash Equity:Opening-Balances
+
+2014-01-01 note Assets:Investments "Investment account"
+
+2014-01-01 balance Assets:Investments  1000 HOOL
+
+---
+
+(file
+    (option (string) (string))
+    (commodity
+        (date)
+        (currency)
+        (key_value
+            (key)
+            (value (string))
+        )
+    )
+    (open (date) (account))
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting
+            (account)
+            (incomplete_amount (number) (currency))
+            (cost_spec
+                (cost_comp (compound_amount (number) (currency)))
+            )
+        )
+        (posting
+            (account)
+            (incomplete_amount
+                (unary_number_expr (minus) (number))
+                (currency)
+            )
+        )
+    )
+    (pad (date) (account) (account))
+    (note (date) (account) (string))
+    (balance
+        (date)
+        (account)
+        (amount_tolerance (number) (currency))
+    )
+)

@@ -1,0 +1,68 @@
+============================
+Fuzzy Test: Tag and Link Edge Cases
+============================
+
+2013-05-18 * "Tags and links with various formats"
+    #tag1
+    ^link1
+    Assets:Test                 100 USD
+    Liabilities:Test           -100 USD
+
+2013-05-19 * "Multiple tags and links"
+    #tag1 #tag2 #tag3 #very-long-tag-with-dashes
+    ^link1 ^link2 ^very-long-link-with-dashes
+    Assets:Test                 200 USD
+    Liabilities:Test           -200 USD
+
+2013-05-20 * "Tags and links with numbers and underscores"
+    #tag_123 #tag-with-123-numbers
+    ^link_456 ^link-with-456-numbers
+    Assets:Test                 300 USD
+    Liabilities:Test           -300 USD
+
+2013-05-21 * "Tags and links with dots and slashes"
+    #tag.with.dots #tag/with/slashes
+    ^link.with.dots ^link/with/slashes
+    Assets:Test                 400 USD
+    Liabilities:Test           -400 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (tags_links (tag))
+        (tags_links (link))
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (tags_links (tag) (tag) (tag) (tag))
+        (tags_links (link) (link) (link))
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (tags_links (tag) (tag))
+        (tags_links (link) (link))
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (tags_links (tag) (tag))
+        (tags_links (link) (link))
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+)

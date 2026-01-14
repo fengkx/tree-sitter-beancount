@@ -1,0 +1,34 @@
+========================
+Extended Currency Formats
+========================
+
+2013-05-18 open Assets:Crypto:Bitcoin
+2013-05-18 open Assets:Crypto:Ethereum-Classic
+2013-05-18 open Assets:Stocks:AAPL
+2013-05-18 open Assets:Commodities:Gold
+
+2013-05-19 * "Various currency symbol formats"
+    Assets:Crypto:Bitcoin         0.5 BTC
+    Assets:Crypto:Ethereum-Classic 10 ETH-CLASSIC
+    Assets:Stocks:AAPL            100 AAPL
+    Assets:Commodities:Gold       1 OZ
+    Assets:Cash                  -1000 USD
+
+---
+
+(file
+    (open (date) (account))
+    (open (date) (account))
+    (open (date) (account))
+    (open (date) (account))
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+)

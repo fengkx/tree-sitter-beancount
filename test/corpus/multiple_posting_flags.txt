@@ -1,0 +1,33 @@
+=============================
+Multiple Posting Flags
+=============================
+
+2013-05-18 * "Transaction with posting flags"
+    * Assets:Bank:Checking      100 USD
+    * Assets:Bank:Savings       200 USD
+    * Liabilities:CreditCard   -300 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting
+            (optflag)
+            (account)
+            (incomplete_amount (number) (currency))
+        )
+        (posting
+            (optflag)
+            (account)
+            (incomplete_amount (number) (currency))
+        )
+        (posting
+            (optflag)
+            (account)
+            (incomplete_amount (unary_number_expr (minus) (number)) (currency))
+        )
+    )
+)

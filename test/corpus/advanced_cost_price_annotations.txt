@@ -1,0 +1,319 @@
+================================
+price annotation with total cost
+================================
+
+2014-01-01 *
+    Assets:Invest:AAPL   10 AAPL {45.23 # 452.30 USD} @ 46.50 USD
+    Assets:Invest:Cash  -452.30 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+            (posting
+                (account)
+                (incomplete_amount (number) (currency))
+                (cost_spec
+                    (cost_comp (compound_amount (number) (number) (currency)))
+                )
+                (at)
+                (price_annotation
+                    (incomplete_amount (number) (currency))
+                )
+            )
+            (posting
+                (account)
+                (incomplete_amount
+                    (unary_number_expr (minus) (number))
+                    (currency)
+                )
+            )
+    )
+)
+
+===============================
+compound cost with multiple @ @
+===============================
+
+2014-01-01 *
+    Assets:Invest:AAPL   10 AAPL {45.23 USD, 2014-01-15, "lot-001"} @@ 465.00 USD
+    Assets:Invest:Cash  -465.00 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+            (posting
+                (account)
+                (incomplete_amount (number) (currency))
+                (cost_spec
+                    (cost_comp (compound_amount (number) (currency)))
+                    (cost_comp (date))
+                    (cost_comp (string))
+                )
+                (atat)
+                (price_annotation
+                    (incomplete_amount (number) (currency))
+                )
+            )
+            (posting
+                (account)
+                (incomplete_amount
+                    (unary_number_expr (minus) (number))
+                    (currency)
+                )
+            )
+    )
+)
+
+===========================================
+price annotation on costless commodity
+===========================================
+
+2014-01-01 *
+    Assets:Cash   100 USD @ 1.09 CAD
+    Assets:Cash2  -109 CAD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+            (posting
+                (account)
+                (incomplete_amount (number) (currency))
+                (at)
+                (price_annotation
+                    (incomplete_amount (number) (currency))
+                )
+            )
+            (posting
+                (account)
+                (incomplete_amount
+                    (unary_number_expr (minus) (number))
+                    (currency)
+                )
+            )
+    )
+)
+
+====================================
+double at at with complex cost spec
+====================================
+
+2014-01-01 *
+    Assets:Invest:AAPL   5 AAPL {100.00 # 500.00 USD, "special-lot"} @@ 520.00 USD
+    Assets:Invest:Cash  -520.00 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+            (posting
+                (account)
+                (incomplete_amount (number) (currency))
+                (cost_spec
+                    (cost_comp (compound_amount (number) (number) (currency)))
+                    (cost_comp (string))
+                )
+                (atat)
+                (price_annotation
+                    (incomplete_amount (number) (currency))
+                )
+            )
+            (posting
+                (account)
+                (incomplete_amount
+                    (unary_number_expr (minus) (number))
+                    (currency)
+                )
+            )
+    )
+)
+
+==============================================
+cost with asterisk and price annotation
+==============================================
+
+2014-01-01 *
+    Assets:Invest:AAPL   10 AAPL {*} @ 50.00 USD
+    Assets:Invest:Cash  -500.00 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+            (posting
+                (account)
+                (incomplete_amount (number) (currency))
+                (cost_spec (cost_comp))
+                (at)
+                (price_annotation
+                    (incomplete_amount (number) (currency))
+                )
+            )
+            (posting
+                (account)
+                (incomplete_amount
+                    (unary_number_expr (minus) (number))
+                    (currency)
+                )
+            )
+    )
+)
+
+========================================
+multiple postings with different costs
+========================================
+
+2014-01-01 *
+    Assets:Invest:AAPL    5 AAPL {45.23 USD}
+    Assets:Invest:AAPL   10 AAPL {50.00 USD}
+    Assets:Invest:AAPL   15 AAPL {48.50 # 727.50 USD}
+    Assets:Invest:Cash  -1972.50 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+            (posting
+                (account)
+                (incomplete_amount (number) (currency))
+                (cost_spec
+                    (cost_comp (compound_amount (number) (currency)))
+                )
+            )
+            (posting
+                (account)
+                (incomplete_amount (number) (currency))
+                (cost_spec
+                    (cost_comp (compound_amount (number) (currency)))
+                )
+            )
+            (posting
+                (account)
+                (incomplete_amount (number) (currency))
+                (cost_spec
+                    (cost_comp (compound_amount (number) (number) (currency)))
+                )
+            )
+            (posting
+                (account)
+                (incomplete_amount
+                    (unary_number_expr (minus) (number))
+                    (currency)
+                )
+            )
+    )
+)
+
+==============================================
+price annotation with amount interpolation
+==============================================
+
+2014-01-01 *
+    Assets:Invest:AAPL   10 AAPL @ 45.23 USD
+    Assets:Invest:Cash
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+            (posting
+                (account)
+                (incomplete_amount (number) (currency))
+                (at)
+                (price_annotation
+                    (incomplete_amount (number) (currency))
+                )
+            )
+            (posting
+                (account)
+            )
+    )
+)
+
+==========================================
+currency conversion with complex amounts
+==========================================
+
+2014-01-01 *
+    Assets:USD:Cash       -152.34 USD @ 1.3247 EUR
+    Assets:EUR:Cash       201.85 EUR
+    Assets:EUR:Cash      -201.85 EUR
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+            (posting
+                (account)
+                (incomplete_amount
+                    (unary_number_expr (minus) (number))
+                    (currency)
+                )
+                (at)
+                (price_annotation
+                    (incomplete_amount (number) (currency))
+                )
+            )
+            (posting
+                (account)
+                (incomplete_amount (number) (currency))
+            )
+            (posting
+                (account)
+                (incomplete_amount
+                    (unary_number_expr (minus) (number))
+                    (currency)
+                )
+            )
+    )
+)
+
+===============================================
+cost basis with negative total amounts
+===============================================
+
+2014-01-01 *
+    Assets:Invest:AAPL      -5 AAPL {45.23 USD, "closing-lot"}
+    Assets:Invest:Cash     226.15 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+            (posting
+                (account)
+                (incomplete_amount
+                    (unary_number_expr (minus) (number))
+                    (currency)
+                )
+                (cost_spec
+                    (cost_comp (compound_amount (number) (currency)))
+                    (cost_comp (string))
+                )
+            )
+            (posting
+                (account)
+                (incomplete_amount (number) (currency))
+            )
+    )
+)

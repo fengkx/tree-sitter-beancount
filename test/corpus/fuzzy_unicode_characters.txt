@@ -1,0 +1,42 @@
+==============================
+Fuzzy Test: Unicode Characters
+==============================
+
+2014-01-01 open Assets:银行:账户名称
+2014-01-01 open Expenses:支出:餐饮費
+
+2014-01-02 * "Transaction with mixed languages"
+    Assets:银行:账户名称        1000.00 USD
+    Expenses:支出:餐饮費          -750.00 USD
+    Income:Salary              -250.00 USD
+
+2014-01-03 open Assets:Tests:日本語テスト
+2014-01-04 open Expenses:Tests:한국어테스트
+
+2014-01-05 * "Transaction with Japanese and Korean"
+    Assets:Tests:日本語テスト        500.00 JPY
+    Expenses:Tests:한국어테스트      -500.00 KRW
+
+---
+
+(file
+    (open (date) (account))
+    (open (date) (account))
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+    (open (date) (account))
+    (open (date) (account))
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+)

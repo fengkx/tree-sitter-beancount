@@ -1,0 +1,15 @@
+========================
+Balance with Tolerance
+========================
+
+2013-05-18 balance Assets:Bank:Checking    1000.00 USD
+2013-05-19 balance Assets:Bank:Savings     2500.00 ~ 0.01 USD
+2013-05-20 balance Liabilities:CreditCard -500.50 ~ 0.05 USD
+
+---
+
+(file
+    (balance (date) (account) (amount_tolerance (number) (currency)))
+    (balance (date) (account) (amount_tolerance (number) (number) (currency)))
+    (balance (date) (account) (amount_tolerance (unary_number_expr (minus) (number)) (number) (currency)))
+)

@@ -1,0 +1,47 @@
+==============================
+Fuzzy Test: Complex Whitespace
+==============================
+
+2014-01-01 * "Transaction with excessive whitespace"
+    Assets:Bank:Checking        100.00 USD
+    Assets:Bank:Savings          50.00    CAD
+    Assets:Bank:Cash            -150.00   EUR
+
+2014-01-02 * "Transaction with tabs and spaces mixed"
+    Assets:Test	                10.00	USD
+    Assets:Test	             20.00	CAD
+    Assets:Test             -30.00	EUR
+
+2014-01-03 * "Transaction with leading spaces on postings"
+    Assets:Bank:Checking         200.00 USD
+        Assets:Bank:Savings      100.00 CAD
+          Assets:Bank:Cash      -300.00 EUR
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+)

@@ -1,0 +1,74 @@
+===============================
+Fuzzy Test: Cost Spec Edge Cases
+===============================
+
+2014-02-11 * "Cost specification with asterisk"
+    Assets:Investments:MSFT       10 MSFT {*}
+    Assets:Cash                  -1000 USD
+
+2014-02-12 * "Empty cost specification"
+    Assets:Investments:AAPL       20 AAPL {}
+    Assets:Cash                  -2000 USD
+
+2014-02-13 * "Cost specification with date"
+    Assets:Investments:GOOG       5 GOOG {2023-01-15}
+    Assets:Cash                  -1500 USD
+
+2014-02-14 * "Cost specification with string label"
+    Assets:Investments:TSLA       3 TSLA {"Lot-A"}
+    Assets:Cash                  -900 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting
+            (account)
+            (incomplete_amount (number) (currency))
+            (cost_spec
+                (cost_comp)
+            )
+        )
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting
+            (account)
+            (incomplete_amount (number) (currency))
+            (cost_spec)
+        )
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting
+            (account)
+            (incomplete_amount (number) (currency))
+            (cost_spec
+                (cost_comp (date))
+            )
+        )
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting
+            (account)
+            (incomplete_amount (number) (currency))
+            (cost_spec
+                (cost_comp (string))
+            )
+        )
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+)

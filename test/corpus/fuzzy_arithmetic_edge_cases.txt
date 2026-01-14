@@ -1,0 +1,59 @@
+===============================
+Fuzzy Test: Arithmetic Edge Cases
+===============================
+
+2014-05-18 * "Arithmetic with zero"
+    Assets:Test                 0 + 0 USD
+    Assets:Test                 100 + 0 USD
+    Assets:Test                 0 - 100 USD
+    Assets:Test                 100 * 0 USD
+    Assets:Test                 100 / 1 USD
+    Income:Test                -200 USD
+
+2014-05-19 * "Arithmetic with negative numbers"
+    Assets:Test                 -50 + -25 USD
+    Assets:Test                 -100 - -50 USD
+    Assets:Test                 -10 * -2 USD
+    Assets:Test                 -100 / -2 USD
+    Income:Test                180 USD
+
+2014-05-20 * "Arithmetic with parentheses"
+    Assets:Test                 (10 + 5) * 2 USD
+    Assets:Test                 10 + (5 * 2) USD
+    Assets:Test                 (100 - 50) / (5 * 2) USD
+    Income:Test                -50 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (binary_number_expr (number) (plus) (number)) (currency)))
+        (posting (account) (incomplete_amount (binary_number_expr (number) (plus) (number)) (currency)))
+        (posting (account) (incomplete_amount (binary_number_expr (number) (minus) (number)) (currency)))
+        (posting (account) (incomplete_amount (binary_number_expr (number) (asterisk) (number)) (currency)))
+        (posting (account) (incomplete_amount (binary_number_expr (number) (slash) (number)) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (binary_number_expr (unary_number_expr (minus) (number)) (plus) (unary_number_expr (minus) (number))) (currency)))
+        (posting (account) (incomplete_amount (binary_number_expr (unary_number_expr (minus) (number)) (minus) (unary_number_expr (minus) (number))) (currency)))
+        (posting (account) (incomplete_amount (binary_number_expr (unary_number_expr (minus) (number)) (asterisk) (unary_number_expr (minus) (number))) (currency)))
+        (posting (account) (incomplete_amount (binary_number_expr (unary_number_expr (minus) (number)) (slash) (unary_number_expr (minus) (number))) (currency)))
+        (posting (account) (incomplete_amount (number) (currency)))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (binary_number_expr (binary_number_expr (number) (plus) (number)) (asterisk) (number)) (currency)))
+        (posting (account) (incomplete_amount (binary_number_expr (number) (plus) (binary_number_expr (number) (asterisk) (number))) (currency)))
+        (posting (account) (incomplete_amount (binary_number_expr (binary_number_expr (number) (minus) (number)) (slash) (binary_number_expr (number) (asterisk) (number))) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+)

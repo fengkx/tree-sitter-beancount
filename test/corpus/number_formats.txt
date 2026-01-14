@@ -1,0 +1,25 @@
+=========================
+Complex Number Formats
+=========================
+
+2013-05-18 * "Various number formats"
+    Assets:TestAccount1         1234567.89 USD
+    Assets:TestAccount2         1,234,567.89 USD
+    Assets:TestAccount3         0.123 USD
+    Assets:TestAccount4         123 USD
+    Assets:Cash                 -1234579.016 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+)

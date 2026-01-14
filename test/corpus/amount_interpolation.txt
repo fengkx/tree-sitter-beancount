@@ -1,0 +1,62 @@
+============================
+Amount Interpolation
+============================
+
+2013-05-18 * "Transaction with missing amount"
+    Assets:Bank:Checking    -400 USD
+    Liabilities:CreditCard
+
+2013-05-19 * "Missing amount with cost"
+    Assets:Investments:AAPL    -10 AAPL {183.07 USD}
+    Assets:Investments:Cash
+    Income:CapitalGains
+
+2013-05-20 * "Missing amount with price"
+    Assets:Bank:USD           -400 USD @ 1.09 CAD
+    Assets:Bank:CAD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+        (posting (account))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting
+            (account)
+            (incomplete_amount
+                (unary_number_expr (minus) (number))
+                (currency)
+            )
+            (cost_spec
+                (cost_comp
+                    (compound_amount (number) (currency))
+                )
+            )
+        )
+        (posting (account))
+        (posting (account))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting
+            (account)
+            (incomplete_amount
+                (unary_number_expr (minus) (number))
+                (currency)
+            )
+            (at)
+            (price_annotation (incomplete_amount (number) (currency)))
+        )
+        (posting (account))
+    )
+)

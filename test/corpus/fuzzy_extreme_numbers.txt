@@ -1,0 +1,58 @@
+============================
+Fuzzy Test: Extreme Numbers
+============================
+
+2014-01-01 * "Very large numbers"
+    Assets:Test                 999999999999.99 USD
+    Assets:Test                 123456789012345678901.23 USD
+    Liabilities:Credit         -123456789012345678922.22 USD
+
+2014-01-02 * "Very small numbers"
+    Assets:Test                 0.00000001 USD
+    Assets:Test                 0.0000000000001 USD
+    Assets:Test                 0.123456789012345 USD
+
+2014-01-03 * "Numbers with many decimal places"
+    Assets:Test                 1.123456789012345678901234567890 USD
+    Liabilities:Credit         -1.123456789012345678901234567890 USD
+
+2014-01-04 * "Numbers with thousand separators"
+    Assets:Test                 1,000,000 USD
+    Assets:Test                 1,234,567,890 USD
+    Assets:Test                 12,345.67 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (number) (currency)))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (number) (currency)))
+    )
+)
