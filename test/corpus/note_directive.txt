@@ -1,0 +1,67 @@
+======================
+Note directive basic
+======================
+
+2013-05-18 note Assets:US:BestBank:Checking  "Blah, di blah."
+
+---
+
+(file
+    (note
+        (date)
+        (account)
+        (string)
+    )
+)
+
+======================
+Note with metadata
+======================
+
+2013-05-18 note Assets:US:BestBank:Checking  "Called to confirm wire transfer."
+    source: "Phone call"
+    timestamp: "2013-05-18T10:00:00"
+
+---
+
+(file
+    (note
+        (date)
+        (account)
+        (string)
+        (key_value (key) (value (string)))
+        (key_value (key) (value (string)))
+    )
+)
+
+======================
+Note with UTF-8
+======================
+
+2013-05-18 note Assets:银行:账户  "银行备注信息"
+
+---
+
+(file
+    (note
+        (date)
+        (account)
+        (string)
+    )
+)
+
+======================
+Multiple notes
+======================
+
+2013-01-15 note Assets:Bank:Checking  "Initial balance confirmed"
+2013-06-20 note Assets:Bank:Checking  "Statement received"
+2013-12-31 note Assets:Bank:Checking  "Year-end reconciliation"
+
+---
+
+(file
+    (note (date) (account) (string))
+    (note (date) (account) (string))
+    (note (date) (account) (string))
+)

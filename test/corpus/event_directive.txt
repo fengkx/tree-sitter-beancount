@@ -1,0 +1,63 @@
+======================
+Event directive basic
+======================
+
+2013-05-18 event "location" "New York, USA"
+
+---
+
+(file
+    (event
+        (date)
+        (string)
+        (string)
+    )
+)
+
+======================
+Event with empty string value
+======================
+
+2013-05-18 event "location" ""
+
+---
+
+(file
+    (event
+        (date)
+        (string)
+        (string)
+    )
+)
+
+======================
+Event with UTF-8 strings
+======================
+
+2013-05-18 event "位置" "北京, 中国"
+
+---
+
+(file
+    (event
+        (date)
+        (string)
+        (string)
+    )
+)
+
+======================
+Multiple events
+======================
+
+2013-01-01 event "location" "New York"
+2013-06-15 event "location" "Los Angeles"
+2013-12-31 event "status" "completed"
+
+---
+
+(file
+    (event (date) (string) (string))
+    (event (date) (string) (string))
+    (event (date) (string) (string))
+)

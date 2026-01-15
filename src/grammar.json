@@ -196,7 +196,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[!&?%PSTCURM*#]"
+        "value": "[?%PSTCURM*#]"
       }
     },
     "_none": {
@@ -252,7 +252,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[A-Z]([A-Z0-9\\'\\._\\-]{0,22}[A-Z0-9])?"
+        "value": "\\/[A-Z0-9]+|[A-Z][A-Z0-9\\'\\._\\-]*[A-Z0-9]?"
       }
     },
     "string": {
@@ -309,16 +309,12 @@
           "value": "txn"
         },
         {
-          "type": "SYMBOL",
-          "name": "flag"
-        },
-        {
           "type": "STRING",
           "value": "*"
         },
         {
           "type": "STRING",
-          "value": "#"
+          "value": "!"
         }
       ]
     },
@@ -706,11 +702,11 @@
         },
         {
           "type": "STRING",
-          "value": "#"
+          "value": "!"
         },
         {
-          "type": "SYMBOL",
-          "name": "flag"
+          "type": "STRING",
+          "value": "#"
         }
       ]
     },

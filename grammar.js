@@ -76,7 +76,7 @@ module.exports = grammar({
 		slash: $ => token('/'),
 		plus: $ => token('+'),
 		minus: $ => token('-'),
-		flag: $ => token(/[!&?%PSTCURM*#]/),
+		flag: $ => token(/[?%PSTCURM*#]/),
 		_none: $ => token('NULL'),
 		bool: $ => token(/TRUE|FALSE/),
 		date: $ => token(/([12]\d{3}[-\/](0[1-9]|1[0-2])[-\/](0[1-9]|[12]\d|3[01]))/),
@@ -103,7 +103,7 @@ module.exports = grammar({
 					),
 				),
 			),
-		currency: $ => token(/[A-Z]([A-Z0-9\'\._\-]{0,22}[A-Z0-9])?/),
+		currency: $ => token(/\/[A-Z0-9]+|[A-Z][A-Z0-9\'\._\-]*[A-Z0-9]?/),
 		string: $ => seq('"', optional($._string_content), '"'),
 		number: $ => token(/([0-9]+|[0-9][0-9,]+[0-9])(\.[0-9]*)?/),
 		tag: $ => token(/#[A-Za-z0-9\-_/.]+/),
@@ -117,9 +117,8 @@ module.exports = grammar({
 		txn: $ =>
 			choice(
 				'txn',
-				$.flag,
 				'*',
-				'#',
+				'!',
 			),
 
 		_number_expr: $ =>
@@ -218,8 +217,8 @@ module.exports = grammar({
 		optflag: $ =>
 			choice(
 				'*',
+				'!',
 				'#',
-				$.flag,
 			),
 
 		price_annotation: $ => $.incomplete_amount,

@@ -1,0 +1,68 @@
+==============================
+Fuzzy Test: Date Format Variations
+==============================
+
+2013/05/18 * "Slash format date"
+    Assets:Bank 100 USD
+    Expenses:Food -100 USD
+
+2013-05-19 * "Dash format date"
+    Assets:Bank 100 USD
+    Expenses:Food -100 USD
+
+2013-05-20 * "Leading zero month"
+    Assets:Bank 100 USD
+    Expenses:Food -100 USD
+
+2013-12-31 * "Year-end date"
+    Assets:Bank 100 USD
+    Expenses:Food -100 USD
+
+2000-01-01 * "Millennium date"
+    Assets:Bank 100 USD
+    Expenses:Food -100 USD
+
+2099-12-31 * "Future date"
+    Assets:Bank 100 USD
+    Expenses:Food -100 USD
+
+---
+
+(file
+    (transaction (date) (txn) (narration) (posting (account) (incomplete_amount (number) (currency))) (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+    (transaction (date) (txn) (narration) (posting (account) (incomplete_amount (number) (currency))) (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+    (transaction (date) (txn) (narration) (posting (account) (incomplete_amount (number) (currency))) (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+    (transaction (date) (txn) (narration) (posting (account) (incomplete_amount (number) (currency))) (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+    (transaction (date) (txn) (narration) (posting (account) (incomplete_amount (number) (currency))) (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+    (transaction (date) (txn) (narration) (posting (account) (incomplete_amount (number) (currency))) (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency))))
+)
+
+==============================
+Fuzzy Test: Date in Different Contexts
+==============================
+
+2013-01-01 open Assets:Test
+2013-01-02 close Assets:Test
+2013-01-03 commodity USD
+2013-01-04 note Assets:Test "note"
+2013-01-05 pad Assets:Test Equity:Other
+2013-01-06 balance Assets:Test 100 USD
+2013-01-07 event "location" "place"
+2013-01-08 query "name" "sql"
+2013-01-09 document Assets:Test "/path"
+2013-01-10 price USD 1.0 CAD
+
+---
+
+(file
+    (open (date) (account))
+    (close (date) (account))
+    (commodity (date) (currency))
+    (note (date) (account) (string))
+    (pad (date) (account) (account))
+    (balance (date) (account) (amount_tolerance (number) (currency)))
+    (event (date) (string) (string))
+    (query (date) (string) (string))
+    (document (date) (account) (filename (string)))
+    (price (date) (currency) (amount (number) (currency)))
+)

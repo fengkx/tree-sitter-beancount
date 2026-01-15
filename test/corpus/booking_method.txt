@@ -1,0 +1,102 @@
+======================
+Open with STRICT booking
+======================
+
+2013-05-18 open Assets:Investments:AAPL    AAPL "STRICT"
+
+---
+
+(file
+    (open
+        (date)
+        (account)
+        (currency)
+        (opt_booking (string))
+    )
+)
+
+======================
+Open with FIFO booking
+======================
+
+2013-05-18 open Assets:Investments:GOOG    GOOG "FIFO"
+
+---
+
+(file
+    (open
+        (date)
+        (account)
+        (currency)
+        (opt_booking (string))
+    )
+)
+
+======================
+Open with LIFO booking
+======================
+
+2013-05-18 open Assets:Investments:MSFT    MSFT "LIFO"
+
+---
+
+(file
+    (open
+        (date)
+        (account)
+        (currency)
+        (opt_booking (string))
+    )
+)
+
+======================
+Open with NONE booking
+======================
+
+2013-05-18 open Assets:Investments:TSLA    TSLA "NONE"
+
+---
+
+(file
+    (open
+        (date)
+        (account)
+        (currency)
+        (opt_booking (string))
+    )
+)
+
+======================
+Open with currencies and booking
+======================
+
+2013-05-18 open Assets:Vanguard:VIIPX    VIIPX "STRICT"
+
+---
+
+(file
+    (open
+        (date)
+        (account)
+        (currency)
+        (opt_booking (string))
+    )
+)
+
+======================
+Open with currencies only
+======================
+
+2013-05-18 open Assets:Cash    USD,CAD,EUR
+
+---
+
+(file
+    (open
+        (date)
+        (account)
+        (currency)
+        (currency)
+        (currency)
+    )
+)

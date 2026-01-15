@@ -1,0 +1,93 @@
+======================
+Price directive basic
+======================
+
+2013-05-18 price USD   1.0290 CAD
+
+---
+
+(file
+    (price
+        (date)
+        (currency)
+        (amount
+            (number)
+            (currency)
+        )
+    )
+)
+
+======================
+Price with metadata
+======================
+
+2013-05-18 price HOOL  500 USD
+    source: "Yahoo Finance"
+
+---
+
+(file
+    (price
+        (date)
+        (currency)
+        (amount
+            (number)
+            (currency)
+        )
+        (key_value (key) (value (string)))
+    )
+)
+
+======================
+Price for stock
+======================
+
+2014-01-15 price AAPL  175.50 USD
+
+---
+
+(file
+    (price
+        (date)
+        (currency)
+        (amount
+            (number)
+            (currency)
+        )
+    )
+)
+
+======================
+Multiple prices same day
+======================
+
+2013-05-18 price USD  1.0000 CAD
+2013-05-18 price EUR  1.3500 USD
+2013-05-18 price GBP  1.5700 USD
+
+---
+
+(file
+    (price (date) (currency) (amount (number) (currency)))
+    (price (date) (currency) (amount (number) (currency)))
+    (price (date) (currency) (amount (number) (currency)))
+)
+
+======================
+Price with zero
+======================
+
+2013-05-18 price XYZ  0.0001 USD
+
+---
+
+(file
+    (price
+        (date)
+        (currency)
+        (amount
+            (number)
+            (currency)
+        )
+    )
+)

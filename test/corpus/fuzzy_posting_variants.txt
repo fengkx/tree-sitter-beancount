@@ -1,0 +1,98 @@
+==============================
+Fuzzy Test: Currency Edge Cases
+==============================
+
+; Single letter currency
+2024-01-01 * "Single letter"
+    Assets:Test 10 V {50 USD}
+    Assets:Cash -500 USD
+
+; Numbers in currency
+2024-01-02 * "Numbers"
+    Assets:Test 10 VTI2014 {100 USD}
+    Assets:Cash -1000 USD
+
+; Currency with underscore
+2024-01-03 * "Underscore"
+    Assets:Test 10 DJ_EURO {100 USD}
+    Assets:Cash -1000 USD
+
+; Currency with period
+2024-01-04 * "Period"
+    Assets:Test 10 VTI.2014 {100 USD}
+    Assets:Cash -1000 USD
+
+; Currency with dash
+2024-01-05 * "Dash"
+    Assets:Test 10 ETH-CLASSIC {100 USD}
+    Assets:Cash -1000 USD
+
+; Currency with slash (futures)
+2024-01-06 * "Slash"
+    Assets:Futures 10 /NQH21 {15000 USD}
+    Assets:Cash -150000 USD
+
+==============================
+Fuzzy Test: Posting Flags
+==============================
+
+; All postings with asterisk
+2024-01-10 * "All asterisk"
+    * Assets:A 100 USD
+    * Liabilities:B -100 USD
+
+; All postings with exclamation
+2024-01-11 * "All exclamation"
+    ! Assets:A 100 USD
+    ! Liabilities:B -100 USD
+
+; Mixed flags
+2024-01-12 * "Mixed flags"
+    * Assets:A 100 USD
+    ! Liabilities:B -50 USD
+    * Income:C -50 USD
+
+; Transaction flag with posting flags
+2024-01-13 ! "Pending tx"
+    * Assets:A 100 USD
+    Liabilities:B -100 USD
+
+==============================
+Fuzzy Test: Metadata Placement
+==============================
+
+; Metadata before postings
+2024-01-20 * "Meta first"
+    key1: "value1"
+    Assets:Test 100 USD
+    Liabilities:Test -100 USD
+
+; Metadata after posting
+2024-01-21 * "Meta after"
+    Assets:Test 100 USD
+    key2: "value2"
+    Liabilities:Test -100 USD
+
+; Metadata between postings
+2024-01-22 * "Meta between"
+    Assets:A 50 USD
+    key: "between"
+    Assets:B 50 USD
+    Liabilities:C -100 USD
+
+; Multiple metadata values
+2024-01-23 * "Multi meta"
+    str: "text"
+    num: 42
+    bool: TRUE
+    date: 2024-01-01
+    Assets:Test 100 USD
+    Liabilities:Test -100 USD
+
+; Metadata on all postings
+2024-01-24 * "Meta each"
+    Assets:A 50 USD
+    meta1: "one"
+    Assets:B 50 USD
+    meta2: "two"
+    Liabilities:C -100 USD

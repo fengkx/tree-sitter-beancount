@@ -1,0 +1,92 @@
+==============================
+Fuzzy Test: Arithmetic Expressions
+==============================
+
+; Simple addition
+2024-01-01 * "Addition"
+    Assets:Test 10 + 5 USD
+    Liabilities:Test -15 USD
+
+; Simple subtraction
+2024-01-02 * "Subtraction"
+    Assets:Test 20 - 5 USD
+    Liabilities:Test -15 USD
+
+; Multiplication
+2024-01-03 * "Multiplication"
+    Assets:Test 10 * 3 USD
+    Liabilities:Test -30 USD
+
+; Division
+2024-01-04 * "Division"
+    Assets:Test 30 / 3 USD
+    Liabilities:Test -10 USD
+
+; Mixed operations
+2024-01-05 * "Mixed"
+    Assets:Test 10 + 5 * 2 USD
+    Liabilities:Test -20 USD
+
+; With parentheses
+2024-01-06 * "Parentheses"
+    Assets:Test (10 + 5) * 2 USD
+    Liabilities:Test -30 USD
+
+; Negative numbers
+2024-01-07 * "Negative"
+    Assets:Test -10 + -5 USD
+    Liabilities:Test 15 USD
+
+; Complex expression
+2024-01-08 * "Complex"
+    Assets:Test (100 - 50) / 2 + 25 USD
+    Liabilities:Test -50 USD
+
+; Zero arithmetic
+2024-01-09 * "Zero arithmetic"
+    Assets:Test 100 + 0 USD
+    Liabilities:Test -100 USD
+
+; Multiple operations
+2024-01-10 * "Multiple"
+    Assets:Test 10 + 20 + 30 USD
+    Liabilities:Test -60 USD
+
+==============================
+Fuzzy Test: Number Formats
+==============================
+
+; Integer
+2024-01-15 * "Integer"
+    Assets:Test 100 USD
+    Liabilities:Test -100 USD
+
+; Decimal
+2024-01-16 * "Decimal"
+    Assets:Test 100.50 USD
+    Liabilities:Test -100.50 USD
+
+; Many decimals
+2024-01-17 * "Many decimals"
+    Assets:Test 100.123456789 USD
+    Liabilities:Test -100.123456789 USD
+
+; With commas
+2024-01-18 * "Commas"
+    Assets:Test 1,234 USD
+    Liabilities:Test -1,234 USD
+
+; Large number with commas
+2024-01-19 * "Large commas"
+    Assets:Test 1,234,567 USD
+    Liabilities:Test -1,234,567 USD
+
+; Negative
+2024-01-20 * "Negative"
+    Assets:Test -500 USD
+    Liabilities:Test 500 USD
+
+; Space before negative
+2024-01-21 * "Space negative"
+    Assets:Test - 500 USD
+    Liabilities:Test 500 USD

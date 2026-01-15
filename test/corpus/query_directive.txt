@@ -1,0 +1,63 @@
+======================
+Query directive basic
+======================
+
+2013-05-18 query "cash" "SELECT SUM(position) WHERE currency = 'USD'"
+
+---
+
+(file
+    (query
+        (date)
+        (string)
+        (string)
+    )
+)
+
+======================
+Query with complex SQL
+======================
+
+2013-05-18 query "balance" "SELECT account, sum(position) WHERE currency = 'USD' GROUP BY account ORDER BY account"
+
+---
+
+(file
+    (query
+        (date)
+        (string)
+        (string)
+    )
+)
+
+======================
+Query with special characters
+======================
+
+2013-05-18 query "特殊" "SELECT * WHERE account =~ 'Expenses:.*'"
+
+---
+
+(file
+    (query
+        (date)
+        (string)
+        (string)
+    )
+)
+
+======================
+Multiple queries
+======================
+
+2013-01-01 query "daily" "SELECT *"
+2013-06-15 query "monthly" "SELECT SUM(position) GROUP BY month"
+2013-12-31 query "yearly" "SELECT account, SUM(position) YEAR"
+
+---
+
+(file
+    (query (date) (string) (string))
+    (query (date) (string) (string))
+    (query (date) (string) (string))
+)

@@ -1,0 +1,77 @@
+======================
+Short currency symbols
+======================
+
+2014-01-01 open Assets:Investments:V
+2014-01-01 open Assets:Investments:P
+
+2014-01-02 * "Short stock symbols"
+    Assets:Investments:V    10 V {180.00 USD}
+    Assets:Investments:P    20 P {85.00 USD}
+    Assets:Cash            -3700 USD
+
+---
+
+(file
+    (open (date) (account))
+    (open (date) (account))
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting
+            (account)
+            (incomplete_amount (number) (currency))
+            (cost_spec
+                (cost_comp (compound_amount (number) (currency)))
+            )
+        )
+        (posting
+            (account)
+            (incomplete_amount (number) (currency))
+            (cost_spec
+                (cost_comp (compound_amount (number) (currency)))
+            )
+        )
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+)
+
+======================
+Currency with numbers at end
+======================
+
+2014-01-01 open Assets:Stocks:VTI2014
+2014-01-01 open Assets:Bonds:USTREASURY
+
+2014-01-02 * "Complex currency symbols"
+    Assets:Stocks:VTI2014    50 VTI2014 {100.00 USD}
+    Assets:Bonds:USTREASURY  100 USTREASURY {99.50 USD}
+    Assets:Cash              -14950 USD
+
+---
+
+(file
+    (open (date) (account))
+    (open (date) (account))
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting
+            (account)
+            (incomplete_amount (number) (currency))
+            (cost_spec
+                (cost_comp (compound_amount (number) (currency)))
+            )
+        )
+        (posting
+            (account)
+            (incomplete_amount (number) (currency))
+            (cost_spec
+                (cost_comp (compound_amount (number) (currency)))
+            )
+        )
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+)

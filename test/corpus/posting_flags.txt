@@ -1,0 +1,126 @@
+======================
+Posting flags with asterisk
+======================
+
+2013-05-18 * "Transaction with posting flags"
+    * Assets:Bank:Checking      100 USD
+    * Assets:Bank:Savings       200 USD
+    * Liabilities:CreditCard   -300 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting
+            (optflag)
+            (account)
+            (incomplete_amount (number) (currency))
+        )
+        (posting
+            (optflag)
+            (account)
+            (incomplete_amount (number) (currency))
+        )
+        (posting
+            (optflag)
+            (account)
+            (incomplete_amount (unary_number_expr (minus) (number)) (currency))
+        )
+    )
+)
+
+======================
+Posting flags with exclamation
+======================
+
+2013-05-18 ! "Pending transaction"
+    ! Assets:Bank:Checking      100 USD
+    ! Expenses:Food            -100 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting
+            (optflag)
+            (account)
+            (incomplete_amount (number) (currency))
+        )
+        (posting
+            (optflag)
+            (account)
+            (incomplete_amount (unary_number_expr (minus) (number)) (currency))
+        )
+    )
+)
+
+======================
+Mixed posting flags
+======================
+
+2013-05-18 * "Mixed flags"
+    * Assets:Bank:Checking      500 USD
+    ! Expenses:Food             -100 USD
+    * Liabilities:CreditCard   -400 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting
+            (optflag)
+            (account)
+            (incomplete_amount (number) (currency))
+        )
+        (posting
+            (optflag)
+            (account)
+            (incomplete_amount (unary_number_expr (minus) (number)) (currency))
+        )
+        (posting
+            (optflag)
+            (account)
+            (incomplete_amount (unary_number_expr (minus) (number)) (currency))
+        )
+    )
+)
+
+======================
+Transaction flag with postings
+======================
+
+2013-05-18 * "Cleared transaction"
+    Assets:Bank:Checking      100 USD
+    Expenses:Food             -100 USD
+
+2013-05-19 ! "Pending transaction"
+    Assets:Bank:Checking      200 USD
+    Expenses:Food             -200 USD
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+    )
+)

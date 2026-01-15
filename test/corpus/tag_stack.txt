@@ -1,0 +1,104 @@
+======================
+Push tag then transactions
+======================
+
+pushtag #berlin-trip-2014
+
+2014-04-23 * "Flight to Berlin"
+    Expenses:Flights              -1230.27 USD
+    Liabilities:CreditCard
+
+2014-04-25 * "Hotel in Berlin"
+    Expenses:Hotels               -450.00 EUR
+    Liabilities:CreditCard
+
+poptag #berlin-trip-2014
+
+---
+
+(file
+    (pushtag (tag))
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+        (posting (account))
+    )
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+        (posting (account))
+    )
+    (poptag (tag))
+)
+
+======================
+Multiple push tags
+======================
+
+pushtag #trip-2014
+pushtag #europe
+
+2014-05-01 * "Train travel"
+    Expenses:Transportation       -200.00 EUR
+    Assets:Cash
+
+poptag #europe
+
+2014-05-05 * "Domestic travel"
+    Expenses:Transportation       -50.00 USD
+    Assets:Cash
+
+poptag #trip-2014
+
+---
+
+(file
+    (pushtag (tag))
+    (pushtag (tag))
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+        (posting (account))
+    )
+    (poptag (tag))
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+        (posting (account))
+    )
+    (poptag (tag))
+)
+
+======================
+Tags on transaction after pushtag
+======================
+
+pushtag #auto-imported
+
+2014-06-01 * "Imported transaction"
+    Expenses:Groceries            -75.00 USD
+    Liabilities:CreditCard
+
+poptag #auto-imported
+
+---
+
+(file
+    (pushtag (tag))
+    (transaction
+        (date)
+        (txn)
+        (narration)
+        (posting (account) (incomplete_amount (unary_number_expr (minus) (number)) (currency)))
+        (posting (account))
+    )
+    (poptag (tag))
+)

@@ -1,0 +1,98 @@
+==============================
+Fuzzy Test: Transaction Balancing
+==============================
+
+; Simple balanced transaction
+2024-01-01 * "Simple balance"
+    Assets:Bank 100 USD
+    Liabilities:Credit -100 USD
+
+; Multi-posting balanced transaction
+2024-01-02 * "Multi posting"
+    Assets:Bank 1000 USD
+    Expenses:Food -300 USD
+    Expenses:Transport -200 USD
+    Income:Salary -500 USD
+
+; Balanced with zero
+2024-01-03 * "Zero balance"
+    Assets:Test 0 USD
+    Liabilities:Test 0 USD
+
+; Multiple currencies balanced
+2024-01-04 * "Multi currency"
+    Assets:USD 100 USD
+    Assets:CAD 130 CAD
+    Liabilities:Card -100 USD
+
+; With cost basis
+2024-01-05 * "With cost"
+    Assets:Stocks 10 AAPL {150 USD}
+    Assets:Cash -1500 USD
+
+==============================
+Fuzzy Test: Amount Variations
+==============================
+
+; Negative amounts
+2024-01-10 * "Negative"
+    Assets:Test -50 USD
+    Liabilities:Test 50 USD
+
+; Decimal amounts
+2024-01-11 * "Decimals"
+    Assets:Test 99.99 USD
+    Liabilities:Test -99.99 USD
+
+; Large numbers
+2024-01-12 * "Large"
+    Assets:Test 9999999999.99 USD
+    Liabilities:Test -9999999999.99 USD
+
+; Small numbers
+2024-01-13 * "Small"
+    Assets:Test 0.0001 USD
+    Liabilities:Test -0.0001 USD
+
+; With commas
+2024-01-14 * "With commas"
+    Assets:Test 1,234,567.89 USD
+    Liabilities:Test -1,234,567.89 USD
+
+==============================
+Fuzzy Test: Complex Transactions
+==============================
+
+; Many postings
+2024-01-20 * "Many postings"
+    Assets:A 100 USD
+    Assets:B 100 USD
+    Assets:C 100 USD
+    Assets:D 100 USD
+    Assets:E 100 USD
+    Liabilities:A -600 USD
+
+; No narration
+2024-01-21 *
+    Assets:Test 100 USD
+    Liabilities:Test -100 USD
+
+; With payee
+2024-01-22 * "Store" "Purchase"
+    Assets:Card -50 USD
+    Expenses:Shopping 50 USD
+
+; With tags
+2024-01-23 * #shopping #january
+    Assets:Card -100 USD
+    Expenses:Shopping 100 USD
+
+; With links
+2024-01-24 * ^receipt-001
+    Assets:Card -75 USD
+    Expenses:Food 75 USD
+
+; Tags and links
+2024-01-25 * #trip #europe ^flight-ticket
+    Expenses:Travel -500 USD
+    Assets:Card 500 USD
