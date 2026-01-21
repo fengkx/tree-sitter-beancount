@@ -8,7 +8,9 @@ module.exports = grammar({
 	// Ensure we don't extract keywords from tokens
 	word: ($) => $.identifier,
 
-	inline: ($) => [],
+	inline: ($) => [
+		$.currency_key_value,
+	],
 
 	conflicts: ($) => [],
 
@@ -16,7 +18,7 @@ module.exports = grammar({
 		$._stars,
 		$._sectionend,
 		$._eof, // Basically just '\0', but allows multiple to be matched
-		$._string_content,  // 新增：字符串内容由外部扫描器处理
+		$._string_content, // 新增：字符串内容由外部扫描器处理
 	],
 
 	extras: ($) => [
@@ -103,8 +105,9 @@ module.exports = grammar({
 					),
 				),
 			),
-		currency: $ => token(/\/[A-Z0-9]+|[A-Z][A-Z0-9\'\._\-]*[A-Z0-9]?/),
+		currency: $ => token(/[A-Z]([A-Z0-9\'\._\-]{0,22}[A-Z0-9])?/),
 		string: $ => seq('"', optional($._string_content), '"'),
+		unquoted_string: $ => token(prec(-1, /[^\r\n]+/)),
 		number: $ => token(/([0-9]+|[0-9][0-9,]+[0-9])(\.[0-9]*)?/),
 		tag: $ => token(/#[A-Za-z0-9\-_/.]+/),
 		link: $ => token(/\^[A-Za-z0-9\-_/.]+/),
@@ -221,17 +224,11 @@ module.exports = grammar({
 				'#',
 			),
 
-		price_annotation: $ => $.incomplete_amount,
-		// choice(
-		//    seq(
-		//        $.atat,
-		//        $.incomplete_amount
-		//    ),
-		//    seq(
-		//        $.at,
-		//        $.incomplete_amount
-		//    )
-		// ),
+		price_annotation: $ =>
+			choice(
+				$.incomplete_amount,
+				$.currency,
+			),
 
 		posting: $ =>
 			seq(
@@ -252,25 +249,49 @@ module.exports = grammar({
 
 		key: $ => token(/[a-z][a-zA-Z0-9\-_]+/),
 
+		currency_key_value: $ =>
+			prec.left(seq(
+				alias('currency', $.key),
+				':',
+				optional(
+					seq(
+						repeat(/ /),
+						field('value', alias($.value_currency, $.value)),
+					),
+				),
+			)),
+
 		value: $ =>
-			choice(
+			prec.left(choice(
 				$.string,
-				$.account,
 				$.date,
 				$.currency,
+				$.account,
 				$.tag,
 				$.bool,
 				$._none,
 				$._number_expr,
 				$.amount,
-			),
+				$.string,
+				$.unquoted_string,
+			)),
+
+		value_currency: $ => seq($.currency),
 
 		key_value: $ =>
-			prec.left(seq(
-				$.key,
-				':',
-				$.value,
-			)),
+			choice(
+				$.currency_key_value,
+				prec.left(seq(
+					$.key,
+					':',
+					optional(
+						seq(
+							repeat(/ /),
+							$.value,
+						),
+					),
+				)),
+			),
 
 		_key_value_line: $ =>
 			seq(
