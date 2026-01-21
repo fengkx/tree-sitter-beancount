@@ -50,3 +50,24 @@ extra whitespace transaction
     )
     (comment)
 )
+
+=============================
+escaped quotes in string
+=============================
+
+2024-01-01 * "Payee \"name\"" "Narration with \"quote\" inside"
+    Assets:Cash 10 USD
+    Expenses:Food
+
+---
+
+(file
+    (transaction
+        (date)
+        (txn)
+        (payee)
+        (narration)
+        (posting (account) (incomplete_amount (number) (currency)))
+        (posting (account))
+    )
+)
