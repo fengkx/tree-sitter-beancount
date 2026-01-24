@@ -157,69 +157,69 @@ struct Scanner {
     }
 
     // Check if the string matches a Beancount account prefix
-    // Account prefixes: Assets, Liabilities, Equity, Income, Expenses
-    // Returns true if current position starts with one of these followed by ':'
+    // Account format: root account name (uppercase letter or CJK character) followed by ':'
+    // Root account names can be customized via option directives (name_assets, name_liabilities, etc.)
+    // Returns true if current position starts with an account-like pattern followed by ':'
     static bool is_account_prefix(TSLexer *lexer) {
         int32_t c = lexer->lookahead;
         
-        // Check for each account type prefix
-        // Assets:
-        if (c == 'A') {
-            const char *expected = "ssets:";
+        // Check if first character is uppercase letter (A-Z)
+        if (c >= 'A' && c <= 'Z') {
+            // Consume the first character
             lexer->advance(lexer, false);
-            for (int i = 0; expected[i]; i++) {
-                if (lexer->lookahead != expected[i]) return false;
-                lexer->advance(lexer, false);
-            }
-            return true;
-        }
-        
-        // Liabilities:
-        if (c == 'L') {
-            const char *expected = "iabilities:";
-            lexer->advance(lexer, false);
-            for (int i = 0; expected[i]; i++) {
-                if (lexer->lookahead != expected[i]) return false;
-                lexer->advance(lexer, false);
-            }
-            return true;
-        }
-        
-        // Equity:
-        if (c == 'E') {
-            lexer->advance(lexer, false);
-            c = lexer->lookahead;
-            if (c == 'q') {
-                // Equity:
-                const char *expected = "uity:";
-                lexer->advance(lexer, false);
-                for (int i = 0; expected[i]; i++) {
-                    if (lexer->lookahead != expected[i]) return false;
-                    lexer->advance(lexer, false);
+            
+            // Consume following characters: letters, numbers, dash, or CJK characters
+            // until we find a colon
+            while (true) {
+                c = lexer->lookahead;
+                
+                // Found colon - this looks like an account prefix
+                if (c == ':') {
+                    return true;
                 }
-                return true;
-            } else if (c == 'x') {
-                // Expenses:
-                const char *expected = "penses:";
-                lexer->advance(lexer, false);
-                for (int i = 0; expected[i]; i++) {
-                    if (lexer->lookahead != expected[i]) return false;
+                
+                // Valid account name characters: letters, digits, dash
+                if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || 
+                    (c >= '0' && c <= '9') || c == '-') {
                     lexer->advance(lexer, false);
+                    continue;
                 }
-                return true;
+                
+                // Check for CJK characters (common ranges)
+                // CJK Unified Ideographs: U+4E00-U+9FFF
+                if (c >= 0x4E00 && c <= 0x9FFF) {
+                    lexer->advance(lexer, false);
+                    continue;
+                }
+                
+                // If we hit something else (whitespace, EOF, etc.), not an account prefix
+                return false;
             }
-            return false;
         }
         
-        // Income:
-        if (c == 'I') {
-            const char *expected = "ncome:";
+        // Check for CJK characters as first character
+        // CJK Unified Ideographs: U+4E00-U+9FFF
+        if (c >= 0x4E00 && c <= 0x9FFF) {
             lexer->advance(lexer, false);
-            for (int i = 0; expected[i]; i++) {
-                if (lexer->lookahead != expected[i]) return false;
-                lexer->advance(lexer, false);
+            
+            // Consume following CJK characters, letters, numbers, dash until colon
+            while (true) {
+                c = lexer->lookahead;
+                
+                if (c == ':') {
+                    return true;
+                }
+                
+                // Valid characters: CJK, letters, digits, dash
+                if ((c >= 0x4E00 && c <= 0x9FFF) ||
+                    (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+                    (c >= '0' && c <= '9') || c == '-') {
+                    lexer->advance(lexer, false);
+                    continue;
+                }
+                
+                return false;
             }
-            return true;
         }
         
         return false;

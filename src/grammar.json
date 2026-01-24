@@ -227,7 +227,7 @@
         "members": [
           {
             "type": "PATTERN",
-            "value": "Assets|Liabilities|Equity|Income|Expenses"
+            "value": "[\\p{Lu}\\u{4E00}-\\u{9FFF}\\u{3400}-\\u{4DBF}\\u{F900}-\\u{FAFF}\\u{20000}-\\u{2A6DF}\\u{2A700}-\\u{2B73F}\\u{2B740}-\\u{2B81F}\\u{2B820}-\\u{2CEAF}\\u{2F800}-\\u{2FA1F}\\u{3040}-\\u{309F}\\u{30A0}-\\u{30FF}\\u{AC00}-\\u{D7AF}][\\p{L}\\p{N}\\u{4E00}-\\u{9FFF}\\u{3400}-\\u{4DBF}\\u{F900}-\\u{FAFF}\\u{20000}-\\u{2A6DF}\\u{2A700}-\\u{2B73F}\\u{2B740}-\\u{2B81F}\\u{2B820}-\\u{2CEAF}\\u{2F800}-\\u{2FA1F}\\u{3040}-\\u{309F}\\u{30A0}-\\u{30FF}\\u{AC00}-\\u{D7AF}\\-]*"
           },
           {
             "type": "REPEAT1",

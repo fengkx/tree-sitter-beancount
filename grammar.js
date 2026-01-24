@@ -82,8 +82,9 @@ module.exports = grammar({
 		_none: $ => token('NULL'),
 		bool: $ => token(/TRUE|FALSE/),
 		date: $ => token(/([12]\d{3}[-\/](0[1-9]|1[0-2])[-\/](0[1-9]|[12]\d|3[01]))/),
-		// Account names: Assets|Liabilities|Equity|Income|Expenses followed by colon-separated components
+		// Account names: Root account name (uppercase letter or CJK character) followed by colon-separated components
 		// Components can contain Unicode letters/numbers including CJK characters
+		// Root account names can be customized via option directives (name_assets, name_liabilities, etc.)
 		/**
 		 * \u4E00-\u9FFF：CJK Unified Ideographs（常用汉字）
 		 * \u3400-\u4DBF：CJK Extension A
@@ -96,7 +97,8 @@ module.exports = grammar({
 		account: $ =>
 			token(
 				seq(
-					/Assets|Liabilities|Equity|Income|Expenses/,
+					// Root account: uppercase letter or CJK character, followed by letters/numbers/CJK/dash
+					/[\p{Lu}\u{4E00}-\u{9FFF}\u{3400}-\u{4DBF}\u{F900}-\u{FAFF}\u{20000}-\u{2A6DF}\u{2A700}-\u{2B73F}\u{2B740}-\u{2B81F}\u{2B820}-\u{2CEAF}\u{2F800}-\u{2FA1F}\u{3040}-\u{309F}\u{30A0}-\u{30FF}\u{AC00}-\u{D7AF}][\p{L}\p{N}\u{4E00}-\u{9FFF}\u{3400}-\u{4DBF}\u{F900}-\u{FAFF}\u{20000}-\u{2A6DF}\u{2A700}-\u{2B73F}\u{2B740}-\u{2B81F}\u{2B820}-\u{2CEAF}\u{2F800}-\u{2FA1F}\u{3040}-\u{309F}\u{30A0}-\u{30FF}\u{AC00}-\u{D7AF}\-]*/u,
 					repeat1(
 						seq(
 							':',
